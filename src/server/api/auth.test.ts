@@ -9,7 +9,9 @@ describe("createLocalAuthMiddleware", () => {
       "*",
       createLocalAuthMiddleware({
         resolveRuntimeToken: async (token) =>
-          token === "runtime-token" ? { tokenId: "token-1", allowedActions: [], blockedActions: [] } : undefined,
+          token === "runtime-token"
+            ? { tokenId: "token-1", allowedActions: [], blockedActions: [], allowedProxies: [] }
+            : undefined,
       }),
     );
     app.get("/v1", (context) => context.json({ ok: true }));
@@ -35,7 +37,9 @@ describe("createLocalAuthMiddleware", () => {
       createLocalAuthMiddleware({
         hasRuntimeTokens: async () => true,
         resolveRuntimeToken: async (token) =>
-          token === "oct_valid" ? { tokenId: "token-1", allowedActions: [], blockedActions: [] } : undefined,
+          token === "oct_valid"
+            ? { tokenId: "token-1", allowedActions: [], blockedActions: [], allowedProxies: [] }
+            : undefined,
       }),
     );
     app.post("/v1/actions/:actionId", (context) => context.json({ ok: true, actionId: context.req.param("actionId") }));
