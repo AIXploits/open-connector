@@ -27,6 +27,35 @@ describe("toProviderExecutionError", () => {
   });
 });
 
+describe("defineProviderExecutors", () => {
+  it("uses a provider-specific error mapper when configured", async () => {
+    const executors = defineProviderExecutors({
+      service: "test_service",
+      handlers: {
+        async probe() {
+          throw new Error("provider-specific failure");
+        },
+      },
+      createContext: () => ({}),
+      mapError: () => ({
+        ok: false,
+        error: {
+          code: "rate_limited",
+          message: "provider quota exhausted",
+        },
+      }),
+    });
+
+    await expect(executors["test_service.probe"]!({}, executionContext)).resolves.toEqual({
+      ok: false,
+      error: {
+        code: "rate_limited",
+        message: "provider quota exhausted",
+      },
+    });
+  });
+});
+
 describe("createProviderTimeout", () => {
   it("inherits an already-aborted parent signal", () => {
     const parent = new AbortController();
