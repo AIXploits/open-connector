@@ -1,5 +1,3 @@
-import type { HomeAssistantRestActionName } from "./actions.ts";
-
 import { compactObject, optionalRecord, optionalString, requiredString } from "../../core/cast.ts";
 import {
   createProviderTimeout,
@@ -22,7 +20,7 @@ export type HomeAssistantActionHandler = (
   context: HomeAssistantActionContext,
 ) => Promise<unknown>;
 
-export const homeAssistantActionHandlers: Record<HomeAssistantRestActionName, HomeAssistantActionHandler> = {
+export const homeAssistantActionHandlers: Record<string, HomeAssistantActionHandler> = {
   async get_config(_input, context) {
     return {
       config: await requestHomeAssistantJson({

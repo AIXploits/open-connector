@@ -294,20 +294,3 @@ export const homeAssistantActions: ActionDefinition[] = [
     ),
   }),
 ];
-
-export type HomeAssistantRestActionName =
-  | "get_config"
-  | "list_states"
-  | "get_state"
-  | "list_services"
-  | "call_service"
-  | "list_events"
-  | "fire_event"
-  | "render_template";
-
-export type HomeAssistantWebSocketActionName =
-  | "get_registries"
-  | "search_related"
-  | "list_device_automations"
-  | "execute_script"
-  | "validate_config";
